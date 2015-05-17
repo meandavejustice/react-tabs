@@ -5,12 +5,11 @@
   "main": "lib/main.js",
   "scripts": {
     "test": "node_modules/.bin/rackt test --ci --browsers Firefox",
-    "start": "node_modules/.bin/rackt dev"
+    "start": "node_modules/.bin/rackt dev",
+    "prepublish": "babel src --out-dir lib"
   },
   "browserify": {
-    "transform": [
-      "reactify"
-    ]
+    "transform": ["babelify"]
   },
   "repository": {
     "type": "git",
