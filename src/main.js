@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
 	Tabs: require('./components/Tabs'),
 	TabList: require('./components/TabList'),

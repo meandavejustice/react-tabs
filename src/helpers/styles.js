@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   '.react-tabs [role=tablist]': {
     'border-bottom': '1px solid #aaa',

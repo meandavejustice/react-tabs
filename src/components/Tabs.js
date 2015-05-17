@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react/addons');
 var invariant = require('react/lib/invariant');
 var jss = require('js-stylesheet');
@@ -19,14 +17,14 @@ module.exports = React.createClass({
 		focus: React.PropTypes.bool
 	},
 
-	getDefaultProps: function getDefaultProps() {
+	getDefaultProps: function () {
 		return {
 			selectedIndex: 0,
 			focus: false
 		};
 	},
 
-	getInitialState: function getInitialState() {
+	getInitialState: function () {
 		var tabIds = [];
 		var panelIds = [];
 
@@ -44,16 +42,21 @@ module.exports = React.createClass({
 		};
 	},
 
-	componentWillMount: function componentWillMount() {
+	componentWillMount: function () {
 		var tabsCount = this.getTabsCount();
 		var panelsCount = this.getPanelsCount();
 
-		invariant(tabsCount === panelsCount, 'There should be an equal number of Tabs and TabPanels. ' + 'Received %s Tabs and %s TabPanels.', tabsCount, panelsCount);
+		invariant(
+			tabsCount === panelsCount,
+			'There should be an equal number of Tabs and TabPanels. ' +
+			'Received %s Tabs and %s TabPanels.',
+			tabsCount, panelsCount
+		);
 
 		jss(require('../helpers/styles.js'));
 	},
 
-	setSelected: function setSelected(index, focus) {
+	setSelected: function (index, focus) {
 		// Don't do anything if nothing has changed
 		if (index === this.state.selectedIndex) return;
 		// Check index boundary
@@ -71,27 +74,27 @@ module.exports = React.createClass({
 		}
 	},
 
-	getTabsCount: function getTabsCount() {
+	getTabsCount: function () {
 		return React.Children.count(this.props.children[0].props.children);
 	},
 
-	getPanelsCount: function getPanelsCount() {
+	getPanelsCount: function () {
 		return React.Children.count(this.props.children.slice(1));
 	},
 
-	getTabList: function getTabList() {
+	getTabList: function () {
 		return this.refs.tablist;
 	},
 
-	getTab: function getTab(index) {
+	getTab: function (index) {
 		return this.refs['tabs-' + index];
 	},
 
-	getPanel: function getPanel(index) {
+	getPanel: function (index) {
 		return this.refs['panels-' + index];
 	},
 
-	handleClick: function handleClick(e) {
+	handleClick: function (e) {
 		var node = e.target;
 		do {
 			if (isTabNode(node)) {
@@ -102,7 +105,7 @@ module.exports = React.createClass({
 		} while (node = node.parentNode);
 	},
 
-	handleKeyDown: function handleKeyDown(e) {
+	handleKeyDown: function (e) {
 		if (isTabNode(e.target)) {
 			var index = this.state.selectedIndex;
 			var max = this.getTabsCount() - 1;
@@ -138,13 +141,13 @@ module.exports = React.createClass({
 		}
 	},
 
-	getChildren: function getChildren() {
-		var index = 0;
+  getChildren: function () {
+    var index = 0;
 		var count = 0;
 		var children;
 		var state = this.state;
 
-		// Map children to dynamically setup refs
+    // Map children to dynamically setup refs
 		return React.Children.map(this.props.children, function (child) {
 			var result = null;
 
@@ -181,7 +184,7 @@ module.exports = React.createClass({
 				var tabId = state.tabIds[index];
 				var selected = state.selectedIndex === index;
 
-				index++;
+				index ++;
 
 				result = React.addons.cloneWithProps(child, {
 					ref: ref,
@@ -193,16 +196,17 @@ module.exports = React.createClass({
 
 			return result;
 		});
-	},
 
-	render: function render() {
-		return React.createElement(
-			'div',
-			{ className: 'react-tabs',
-				onClick: this.handleClick,
-				onKeyDown: this.handleKeyDown
-			},
-			this.getChildren()
+  },
+
+	render: function () {
+		return (
+			<div className="react-tabs"
+				onClick={this.handleClick}
+				onKeyDown={this.handleKeyDown}
+      >
+				{this.getChildren()}
+			</div>
 		);
 	}
 });

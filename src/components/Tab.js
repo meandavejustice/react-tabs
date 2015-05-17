@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react');
 
 function syncNodeAttributes(node, props) {
@@ -18,7 +16,7 @@ function syncNodeAttributes(node, props) {
 module.exports = React.createClass({
 	displayName: 'Tab',
 
-	getDefaultProps: function getDefaultProps() {
+	getDefaultProps: function () {
 		return {
 			focus: false,
 			selected: false,
@@ -27,24 +25,24 @@ module.exports = React.createClass({
 		};
 	},
 
-	componentDidMount: function componentDidMount() {
+	componentDidMount: function () {
 		syncNodeAttributes(this.getDOMNode(), this.props);
 	},
 
-	componentDidUpdate: function componentDidUpdate() {
+	componentDidUpdate: function () {
 		syncNodeAttributes(this.getDOMNode(), this.props);
 	},
 
-	render: function render() {
-		return React.createElement(
-			'li',
-			{ role: 'tab',
-				id: this.props.id,
-				'aria-selected': this.props.selected ? 'true' : 'false',
-				'aria-expanded': this.props.selected ? 'true' : 'false',
-				'aria-controls': this.props.panelId
-			},
-			this.props.children
+	render: function () {
+		return (
+			<li role="tab"
+				id={this.props.id}
+				aria-selected={this.props.selected ? 'true' : 'false'}
+				aria-expanded={this.props.selected ? 'true' : 'false'}
+				aria-controls={this.props.panelId}
+      >
+        {this.props.children}
+      </li>
 		);
 	}
 });
